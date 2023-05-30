@@ -10,7 +10,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-nlp1 = spacy.load("./model1/content/output/model-best") #load the best model
+nlp1 = spacy.load("./model2/content/output/model-best") #load the best model
 
 def generate_bot_response(user_message):
     doc = nlp1(user_message) # input sample text
@@ -30,7 +30,7 @@ def send_message(recipient, message):
     # Replace this with your own Twilio implementation
 
     print("In send message")
-    print("Recepient pgone number received as", recipient)
+    print("Recepient phone number received as", recipient)
 
     # Here's a sample implementation using the Twilio Python SDK
     from twilio.rest import Client
