@@ -18,7 +18,7 @@ function App() {
     const data = await response.json();
 
     // Update the bot's response in the state
-    setBotResponse(data.Body);
+    setBotResponse(data.message);
   };
 
   return (
