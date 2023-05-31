@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const [userInput, setUserInput] = useState("");
-  const [botResponse, setBotResponse] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
 
   const sendMessage = async () => {
     // Send the user's message to the backend API
@@ -17,8 +17,15 @@ function App() {
 
     const data = await response.json();
 
-    // Update the bot's response in the state
-    setBotResponse(data.message);
+    // Update the chat history with the user's message and bot's response
+    setChatHistory((prevHistory) => [
+      ...prevHistory,
+      { sender: "user", message: userInput },
+      { sender: "bot", message: data.message },
+    ]);
+
+    // Clear the input field
+    setUserInput("");
   };
 
   return (
@@ -32,12 +39,16 @@ function App() {
         <h1>Twilio AI Messenger</h1>
       </div>
       <div className="chat-body">
-        <div className="message-container user-message">
-          <p>{userInput}</p>
-        </div>
-        <div className="message-container bot-message">
-          <p>{botResponse}</p>
-        </div>
+        {chatHistory.map((message, index) => (
+          <div
+            className={`message-container ${
+              message.sender === "user" ? "user-message" : "bot-message"
+            }`}
+            key={index}
+          >
+            <p>{message.message}</p>
+          </div>
+        ))}
       </div>
       <div className="chat-input">
         <input
