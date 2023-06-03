@@ -14,7 +14,7 @@ nlp1 = spacy.load("./model2/content/output/model-best") #load the best model
 
 def generate_bot_response(user_message):
     doc = nlp1(user_message) # input sample text
-    # Find named entities, phrases and concepts
+    # Identify named entities
     for entity in doc.ents:
         print(entity.text, entity.label_)
         if entity.label_== "RECIPIENT_PHONE":
@@ -31,7 +31,6 @@ def send_message(recipient, message):
     print("In send message")
     print("Recepient phone number received as", recipient)
 
-    # Here's a sample implementation using the Twilio Python SDK
     from twilio.rest import Client
 
     # Twilio account credentials
