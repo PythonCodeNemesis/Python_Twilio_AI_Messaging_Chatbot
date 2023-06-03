@@ -27,7 +27,6 @@ def generate_bot_response(user_message):
 
 def send_message(recipient, message):
     # Code for sending the message using Twilio
-    # Replace this with your own Twilio implementation
 
     print("In send message")
     print("Recepient phone number received as", recipient)
