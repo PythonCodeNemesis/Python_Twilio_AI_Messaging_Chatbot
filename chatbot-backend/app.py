@@ -15,12 +15,20 @@ nlp1 = spacy.load("./model2/content/output/model-best") #load the best model
 def generate_bot_response(user_message):
     doc = nlp1(user_message) # input sample text
     # Identify named entities
+
+    recipient_number = None
+    message = None
     for entity in doc.ents:
         print(entity.text, entity.label_)
         if entity.label_== "RECIPIENT_PHONE":
             recipient_number = entity.text
         if entity.label_== "MESSAGE":
             message = entity.text
+    if not recipient_number:
+        return "Receipient Number not present in message. Please resend."
+    if not message:
+        return "Couldn't understand what message you want to send. Please resend."
+
     send_message_return = send_message(recipient_number, message)
     print(send_message_return)
     return "I'm sorry, I couldn't understand your message. How can I assist you?"
@@ -50,7 +58,7 @@ def send_message(recipient, message):
         )
         return f"Message sent to {recipient} successfully!"
     except Exception as e:
-        return f"Failed to send message: {str(e)}"
+        return "Couldn't send message, please check your Twilio credentials."
 
     return 
 
